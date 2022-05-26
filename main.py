@@ -60,9 +60,6 @@ if __name__ == "__main__":
     root.title("BoM Rate Scraper")
 
     filename = "logo.png"
-    # if "_MEIPASS2" in os.environ:
-    # filename = os.path.join(os.environ["_MEIPASS2"], filename)
-    # logo = PhotoImage(file=filename)
     if getattr(sys, "frozen", False):
         logo = PhotoImage(file=os.path.join(sys._MEIPASS, filename))
     else:
