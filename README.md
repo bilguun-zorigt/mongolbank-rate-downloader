@@ -6,22 +6,19 @@ Download official daily foreign currency exchange rates from Bank of Mongolia (B
 
 ### Create and activate virtual environment
 ```
-***venv***
+***create virtual environment***
 python3 -m venv ./venv
-or
-***virtualenv***
-virtualenv ./venv
 
-***Linux / Mac***
+***activete on Linux or Mac***
 source ./venv/bin/activate 
 
-***Windows***
+***activate on Windows***
 venv\Scripts\activate
 ```
 
 ### Install dependencies
 ```
-pip install --requirement requirements.txt --requirement requirements-dev.txt
+pip install --requirement requirements.txt
 ```
 
 ### Create a bundled application
