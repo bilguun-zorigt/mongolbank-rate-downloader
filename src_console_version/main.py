@@ -1,25 +1,12 @@
 import os
 import sys
 from datetime import date, datetime, timedelta
-from scrapy import Spider, Request, crawler
+from scrapy import Spider, crawler
 
 
 class BoMRate(Spider):
     name = "BoMRate"
-    date_ints = []
-
-    def start_requests(self):
-        for year, month, day in self.date_ints:
-            url_params = f"vYear={year}&vMonth={month}&vDay={day}"
-            url = f"https://www.mongolbank.mn/dblistofficialdailyrate.aspx?{url_params}"
-            yield Request(
-                url,
-                dont_filter=True,
-                callback=self.parse,
-                cb_kwargs={
-                    "date_str": f"{year}-{str(month).zfill(2)}-{str(day).zfill(2)}"
-                },
-            )
+    start_urls = None
 
     def parse(self, response, **kwargs):
         table = response.xpath('//*[@id="ContentPlaceHolder1_panelExchange"]/ul')
@@ -29,9 +16,8 @@ class BoMRate(Spider):
             symbol = self.symbols.get(name, name)
             rate = currency.xpath("td[3]/span/text()[1]").extract()[0].replace(",", "")
             rates.update({symbol: rate})
-        date_str = kwargs.get("date_str")
-        print("scraped ", date_str)
-        yield {"date": date_str, **rates}
+        print("SCRAPED: ", response.request.url[: -len("&date=yyyy-mm-dd")])
+        yield {"date": response.request.url[-len("yyyy-mm-dd") :], **rates}
 
     symbols = {
         "АНУ доллар": "USD",
@@ -75,27 +61,24 @@ class BoMRate(Spider):
     }
 
 
-def print_copyright():
-    print("All Right Reserved.")
-    print("Bilguun Zorigt. 2022")
-    print("https://github.com/bilguun-zorigt")
-    print("")
-
-
 if __name__ == "__main__":
-    print_copyright()
+    INFO = "Source code at: https://github.com/bilguun-zorigt\n"
+    print(INFO)
     # get user input and generate list of dates
     INPUT_DATE_1 = str(input("Enter date to download from (yyyy-mm-dd): "))
     INPUT_DATE_2 = str(input("Enter date to download to (yyyy-mm-dd): "))
     date1 = datetime.strptime(INPUT_DATE_1, "%Y-%m-%d").date()
     date2 = datetime.strptime(INPUT_DATE_2, "%Y-%m-%d").date()
     start_date = min(date1, date2)
-    end_date = max(date1, date2)
-    date_before_yesterday = date.today() - timedelta(days=2)
-    end_date = date_before_yesterday if end_date > date_before_yesterday else end_date
+    end_date = min(max(date1, date2), date.today() - timedelta(days=2))
     number_of_days = (end_date - start_date).days + 1
     dates = [start_date + timedelta(days=day) for day in range(number_of_days)]
-    date_ints = [(d.year, d.month, d.day) for d in dates]
+    date_parts = [(d.year, str(d.month).zfill(2), str(d.day).zfill(2)) for d in dates]
+    start_urls = [
+        "https://www.mongolbank.mn/dblistofficialdailyrate.aspx?"
+        f"vYear={year}&vMonth={month}&vDay={day}&date={year}-{month}-{day}"
+        for year, month, day in date_parts
+    ]
 
     # get filepath - determine if application is a script file or frozen exe
     if getattr(sys, "frozen", False):
@@ -103,10 +86,8 @@ if __name__ == "__main__":
     elif __file__:
         application_path = os.path.dirname(__file__)
 
-    FILENAME = (
-        f"BoM Rates {start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv"
-    )
-    FILEPATH = os.path.join(application_path, FILENAME)
+    FN = f"Rates {start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv"
+    FILEPATH = os.path.join(application_path, FN)
 
     # remove previous files if exists
     try:
@@ -115,19 +96,17 @@ if __name__ == "__main__":
         pass
 
     # Crawl and save result as rates-stacked.csv
+    print("\n***** Starting...")
     process = crawler.CrawlerProcess(
         settings={
-            # "LOG_LEVEL": "ERROR",
-            "FEEDS": {FILENAME: {"format": "csv"}},
+            "LOG_LEVEL": "ERROR",
+            "FEEDS": {FN: {"format": "csv"}},
         }
     )
-    process.crawl(BoMRate, date_ints=date_ints)
-    print("")
-    print("***** Starting *****")
+    process.crawl(BoMRate, start_urls=start_urls)
     process.start()
-    print("******* Done *******", " File saved to: ", FILEPATH)
-    print("")
-    print_copyright()
+    print("***** Done. File saved to: ", FILEPATH, "\n")
+    print(INFO)
 
     a = input("Press enter to exit...")
     if a:

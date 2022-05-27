@@ -5,7 +5,7 @@
     "editor.tabSize": 4,
     "editor.minimap.enabled": false,
     "breadcrumbs.enabled": true,
-    "terminal.integrated.cwd": "${workspaceFolder}/src",
+    "terminal.integrated.cwd": "${workspaceFolder}",
     "python.formatting.provider": "black",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,

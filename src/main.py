@@ -68,7 +68,7 @@ class Main:
 
         Label(
             self.root,
-            text="All Rights Reserved.\nBilguun Zorigt. 2022",
+            text="Bilguun Zorigt. 2022",
         ).grid(row=5, columnspan=2, sticky="", pady=(25, 5))
 
         link = Label(

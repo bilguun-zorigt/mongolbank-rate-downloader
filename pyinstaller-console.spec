@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='BoM_Rate_Console',
+    name='BoM Rate Downloader - console',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

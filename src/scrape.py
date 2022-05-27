@@ -21,6 +21,7 @@ def scraper(dates, queue):
     urls_to_scrape = [
         "https://www.mongolbank.mn/dblistofficialdailyrate.aspx?"
         f"vYear={date.year}&vMonth={date.month}&vDay={date.day}"
+        f"&date={date.year}-{str(date.month).zfill(2)}-{str(date.day).zfill(2)}"
         for date in dates
     ]
 
@@ -49,7 +50,7 @@ def scraper(dates, queue):
     process = CrawlerProcess(
         settings={
             "FEEDS": {
-                stacked_filename: {"format": "csv"},
+                "rates-stacked.csv": {"format": "csv"},
                 # "rates-stacked.json": {"format": "json"},
             }
         }
