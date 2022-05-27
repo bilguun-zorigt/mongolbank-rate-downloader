@@ -26,5 +26,5 @@ pip install --requirement requirements.txt
 
 ### Create a bundled application
 ```
-pyinstaller pyi.spec --clean --noconfirm --upx-dir "path/to/upx/dir/"
+pyinstaller pyinstaller.spec --clean --noconfirm --upx-dir "path/to/upx/dir/"
 ```

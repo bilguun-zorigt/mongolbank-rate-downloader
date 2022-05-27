@@ -5,11 +5,11 @@ block_cipher = None
 
 
 a = Analysis(
-    ['main.py'],
+    ['src/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('logo.png', '.')],
-    hiddenimports=['scrape.py', 'spider.py', 'translation.py', 'babel.numbers'],
+    datas=[('src/logo.png', '.')],
+    hiddenimports=['babel.numbers'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -35,7 +35,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,

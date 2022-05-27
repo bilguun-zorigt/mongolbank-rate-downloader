@@ -2,6 +2,7 @@
 module for starting the scrapy spider and transforming the results
 """
 import os
+import sys
 import csv
 import pandas
 from scrapy.crawler import CrawlerProcess
@@ -23,22 +24,32 @@ def scraper(dates, queue):
         for date in dates
     ]
 
+    # get filepath - determine if application is a script file or frozen exe
+    if getattr(sys, "frozen", False):
+        application_path = os.path.dirname(sys.executable)
+    elif __file__:
+        application_path = os.path.dirname(__file__)
+
+    stacked_filename = os.path.join(application_path, "rates-stacked.csv")
+    unstacked_filename = os.path.join(application_path, "rates-unstacked.csv")
+
     # remove previous files if exists
     try:
-        os.remove("rates-stacked.csv")
+        os.remove(stacked_filename)
     except OSError:
         pass
 
     try:
-        os.remove("rates-unstacked.csv")
+        os.remove(unstacked_filename)
     except OSError:
         pass
     queue.put(1)
+
     # Crawl and save result as rates-stacked.csv
     process = CrawlerProcess(
         settings={
             "FEEDS": {
-                "rates-stacked.csv": {"format": "csv"},
+                stacked_filename: {"format": "csv"},
                 # "rates-stacked.json": {"format": "json"},
             }
         }
@@ -47,14 +58,14 @@ def scraper(dates, queue):
     process.start()
 
     # Open and sort rates-stacked.csv
-    with open("rates-stacked.csv", encoding="utf-8", newline="") as csvfile:
+    with open(stacked_filename, encoding="utf-8", newline="") as csvfile:
         spamreader = csv.DictReader(csvfile, delimiter=",")
         sortedlist = sorted(
             spamreader, key=lambda row: (row["date"], row["symbol"]), reverse=False
         )
 
     with open(
-        "rates-stacked.csv",
+        stacked_filename,
         "w",
         encoding="utf-8",
     ) as csvfile:
@@ -65,7 +76,7 @@ def scraper(dates, queue):
             writer.writerow(row)
 
     # Save rates-unstacked.csv
-    dataframe = pandas.read_csv("rates-stacked.csv")
-    dataframe.set_index(keys=["date", "symbol"]).unstack().to_csv("rates-unstacked.csv")
+    dataframe = pandas.read_csv(stacked_filename)
+    dataframe.set_index(keys=["date", "symbol"]).unstack().to_csv(unstacked_filename)
 
     queue.put(100)
