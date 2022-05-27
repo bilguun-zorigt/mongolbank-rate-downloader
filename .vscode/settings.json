@@ -9,7 +9,9 @@
     "python.formatting.provider": "black",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [],
+    "python.linting.pylintArgs": [
+        "--disable=missing-module-docstring,missing-class-docstring,missing-function-docstring"
+    ],
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
