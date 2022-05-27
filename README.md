@@ -22,6 +22,6 @@ pip install --requirement requirements.txt
 
 ### Create a bundled application
 ```
-pyinstaller --clean --noconfirm pyinstaller-console.spec 
+pyinstaller --clean --noconfirm pyinstaller_console.spec 
 pyinstaller --clean --noconfirm pyinstaller.spec 
 ```
