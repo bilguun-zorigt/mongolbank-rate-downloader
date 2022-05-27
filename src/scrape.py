@@ -1,3 +1,6 @@
+"""
+module for starting the scrapy spider and transforming the results
+"""
 import os
 import csv
 import pandas
@@ -6,10 +9,17 @@ from spider import BoMRate
 
 
 def scraper(dates, queue):
-    # def main(dates, progress_up):
+    """
+    Args:
+        dates (list):
+            list of dates to scrape
+        queue (multiprocessing Queue class instance):
+            send message to GUI process to update progressbar
+    """
     # Get List of URLs to scrape
     urls_to_scrape = [
-        f"https://www.mongolbank.mn/dblistofficialdailyrate.aspx?vYear={date.year}&vMonth={date.month}&vDay={date.day}"
+        "https://www.mongolbank.mn/dblistofficialdailyrate.aspx?"
+        f"vYear={date.year}&vMonth={date.month}&vDay={date.day}"
         for date in dates
     ]
 
@@ -23,7 +33,7 @@ def scraper(dates, queue):
         os.remove("rates-unstacked.csv")
     except OSError:
         pass
-
+    queue.put(1)
     # Crawl and save result as rates-stacked.csv
     process = CrawlerProcess(
         settings={
@@ -37,15 +47,19 @@ def scraper(dates, queue):
     process.start()
 
     # Open and sort rates-stacked.csv
-    with open("rates-stacked.csv", newline="") as csvfile:
+    with open("rates-stacked.csv", encoding="utf-8", newline="") as csvfile:
         spamreader = csv.DictReader(csvfile, delimiter=",")
         sortedlist = sorted(
             spamreader, key=lambda row: (row["date"], row["symbol"]), reverse=False
         )
 
-    with open("rates-stacked.csv", "w") as f:
+    with open(
+        "rates-stacked.csv",
+        "w",
+        encoding="utf-8",
+    ) as csvfile:
         fieldnames = ["date", "symbol", "rate"]
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for row in sortedlist:
             writer.writerow(row)
@@ -54,4 +68,4 @@ def scraper(dates, queue):
     dataframe = pandas.read_csv("rates-stacked.csv")
     dataframe.set_index(keys=["date", "symbol"]).unstack().to_csv("rates-unstacked.csv")
 
-    queue.put("done")
+    queue.put(100)
