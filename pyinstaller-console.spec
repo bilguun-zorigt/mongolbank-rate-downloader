@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['main.py'],
+    ['src_console_version/main.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,11 +28,11 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='BoM_Rate',
+    name='BoM_Rate_Console',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=False,
+    upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
     console=True,
@@ -41,5 +41,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='logo.ico',
+    icon='src/logo.ico',
 )
