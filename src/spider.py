@@ -4,7 +4,7 @@ scrapy spiders module
 import datetime
 import re
 import scrapy
-from translation import symbols
+from symbols import symbols
 
 
 def get_date(response):
