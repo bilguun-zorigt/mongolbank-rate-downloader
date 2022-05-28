@@ -6,7 +6,11 @@ Purpose of this project is to compare what simple task of scraping web page look
 
 Some code are written unnecessarily complicated, or uses unessential external libraries on purpose, just to test or learn some stuff.
 
-# How to use
+# Ready to use version
+Download and run the executable file from:
+https://github.com/bilguun-zorigt/mongolbank-rate-downloader/releases
+
+# Create the bundle yourself
 Each version has its own directory and readme file with instructions.
 
 # Comparisons
