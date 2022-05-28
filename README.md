@@ -10,7 +10,7 @@ Some code are written unnecessarily complicated, or uses unessential external li
 Each version has its own directory and readme file with instructions.
 
 # Comparisons
-Comparisons will be updated as the project goes, and will compare.
+Comparisons will be updated as the project goes, and will compare:
 - How much effort it took to write
 - Speed
 - GUI
