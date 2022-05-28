@@ -4,7 +4,7 @@ Download official daily foreign currency exchange rates from Bank of Mongolia (B
 # About the Project
 Purpose of this project is to compare what simple task of scraping web page looks like in different programming languages and different tools.
 
-Some code are written unnecessarily complicated, or uses unessential external libraries on purpose, just to test or learn some stuff.
+Some code are written unnecessarily complicated, or uses unessential external libraries on purpose, just to test, learn or practice some stuff.
 
 # Ready to use version
 Download and run the executable file from:
