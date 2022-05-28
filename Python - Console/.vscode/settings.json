@@ -1,0 +1,22 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 4,
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": true,
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--disable=missing-module-docstring,missing-class-docstring,missing-function-docstring"
+    ],
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.rulers": [
+        80,
+        120
+    ]
+}
