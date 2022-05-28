@@ -1,7 +1,7 @@
 # About
 Download official daily foreign currency exchange rates from Bank of Mongolia (BoM) website between chosen dates. https://www.mongolbank.mn/dblistofficialdailyrate.aspx
 
-[screenshot](https://github.com/bilguun-zorigt/mongolbank-rate-downloader/tree/main/Python%20-%20Console/screenshot.png)
+[screenshot](https://raw.githubusercontent.com/bilguun-zorigt/mongolbank-rate-downloader/main/Python%20-%20Console/screenshot.png)
 
 # Ready to use version
 Download and run the executable file from:
