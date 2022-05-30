@@ -13,6 +13,13 @@ Sub DownloadFile()
 
     Set HttpRequest = CreateObject("MSXML2.XMLHTTP.6.0")
     HttpRequest.Open "GET", myURL, False '<= True Async
+
+    'Make async for speed
+    'https://stackoverflow.com/questions/11431677/how-to-vba-sends-an-async-xmlhttp-request
+    'https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms757849(v=vs.85)
+    'https://stackoverflow.com/questions/9866930/can-i-do-an-async-xml-call-in-excel-2010-vba
+    'http://dailydoseofexcel.com/archives/2006/10/09/async-xmlhttp-calls/
+
     HttpRequest.send
 
     If HttpRequest.Status = 200 Then
