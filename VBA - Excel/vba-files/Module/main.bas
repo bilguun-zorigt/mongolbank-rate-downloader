@@ -8,21 +8,21 @@ Sub DownloadFile()
 
     Dim HttpRequest As Object
     Dim HTML As Object
-    Dim Spans As Object
-    dim Span As Object
+    Dim Elements As Object
+    dim Element As Object
 
     Set HttpRequest = CreateObject("MSXML2.XMLHTTP.6.0")
-    HttpRequest.Open "GET", myURL, True
+    HttpRequest.Open "GET", myURL, False '<= True Async
     HttpRequest.send
 
     If HttpRequest.Status = 200 Then
         Set HTML = CreateObject("htmlfile")
         HTML.body.innerhtml = HttpRequest.responsetext
-        Set Spans = HTML.getelementbyid("ContentPlaceHolder1_panelExchange").getElementsByTagName("span")
+        Set Elements = HTML.getelementbyid("ContentPlaceHolder1_panelExchange").getElementsByTagName("span")
         debug.Print("***Start***")
-        For Each Span In Spans
-            Debug.Print Span.ID & " : " & Span.innerText
-        Next Span
+        For Each Element In Elements
+            Debug.Print Element.ID & " : " & Element.innerText
+        Next Element
         debug.Print("***End***")
     End If
 
