@@ -33,7 +33,6 @@ Not sure if some are even possible, but you never know until you try.
 - [ ] Swift
 - [ ] Assembly
 
-
 ## Atributes to compare:
 - How much effort it took to write
 - Speed
@@ -41,4 +40,3 @@ Not sure if some are even possible, but you never know until you try.
 - Ease of use
 - Compatibilty
 - etc.
-

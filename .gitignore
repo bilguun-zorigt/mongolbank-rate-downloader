@@ -4,3 +4,7 @@
 **/build
 **/dist
 **/__pycache__/
+**/node_modules
+**/logs
+**/xvba_excel_backup
+**/app.log

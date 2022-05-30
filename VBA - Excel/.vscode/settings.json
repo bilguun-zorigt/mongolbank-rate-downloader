@@ -1,0 +1,20 @@
+{
+    "editor.tabSize": 4,
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "xvba_modules": true,
+        "xvba_unit_test": true,
+        "logs": true,
+        "app.log": true,
+        "config.json": true,
+        "package.json": true,
+        "~$index.xlsb": true,
+    }
+}
