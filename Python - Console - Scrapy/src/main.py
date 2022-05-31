@@ -9,56 +9,15 @@ class BoMRate(Spider):
     start_urls = None
 
     def parse(self, response, **kwargs):
-        table = response.xpath('//*[@id="ContentPlaceHolder1_panelExchange"]/ul')
+        span_id_prefix = "ContentPlaceHolder1_lbl"
+        elements = response.css(f".uk-comment-list span[id^={span_id_prefix}]")
         rates = {}
-        for currency in table.xpath("li/table/tr"):
-            name = currency.xpath("td[2]/text()[1]").extract()[0].replace(",", "")
-            symbol = self.symbols.get(name, name)
-            rate = currency.xpath("td[3]/span/text()[1]").extract()[0].replace(",", "")
+        for element in elements:
+            symbol = element.css("::attr(id)").get()[len(span_id_prefix) :]
+            rate = element.css("::text").get().replace(",", "")
             rates.update({symbol: rate})
         print("SCRAPED: ", response.request.url[: -len("&date=yyyy-mm-dd")])
         yield {"date": response.request.url[-len("yyyy-mm-dd") :], **rates}
-
-    symbols = {
-        "АНУ доллар": "USD",
-        "Евро": "EUR",
-        "Японы иен": "JPY",
-        "Швейцар франк": "CHF",
-        "Шведийн крон": "SEK",
-        "Английн фунт": "GBP",
-        "Болгарын лев": "BGN",
-        "Унгарын форинт": "HUF",
-        "Египетийн фунт": "EGP",
-        "Энэтхэгийн рупи": "INR",
-        "Хонгконг доллар": "HKD",
-        "ОХУ-ын рубль": "RUB",
-        "Казахстан тэнгэ": "KZT",
-        "БНХАУ-ын юань": "CNY",
-        "БНСУ-ын вон": "KRW",
-        "БНАСАУ-ын вон": "KPW",
-        "Канадын доллар": "CAD",
-        "Австралийн доллар": "AUD",
-        "Чех крон": "CZK",
-        "Тайван доллар": "TWD",
-        "Тайланд бат": "THB",
-        "Индонезийн рупи": "IDR",
-        "Малайзын ринггит": "MYR",
-        "Сингапур доллар": "SGD",
-        "АНЭУ-ын дирхам": "AED",
-        "Кувейт динар": "KWD",
-        "Шинэ Зеланд доллар": "NZD",
-        "Данийн крон": "DKK",
-        "Польшийн злот": "PLN",
-        "Украйны гривн": "UAH",
-        "Норвегийн крон": "NOK",
-        "Непалын рупи": "NPR",
-        "Өмнөд Африкийн ранд": "ZAR",
-        "Туркийн лира": "TRY",
-        "Вьетнамын донг": "VND",
-        "Алт /унцаар/": "XAU",
-        "Мөнгө /унцаар/": "XBA",
-        "Зээлжих тусгай эрх": "X",
-    }
 
 
 if __name__ == "__main__":

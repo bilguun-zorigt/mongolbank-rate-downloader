@@ -2,7 +2,6 @@
 scrapy spiders module
 """
 import scrapy
-from symbols import symbols
 
 
 class BoMRate(scrapy.Spider):
@@ -14,13 +13,14 @@ class BoMRate(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         """parse single date page"""
-        table = response.xpath('//*[@id="ContentPlaceHolder1_panelExchange"]/ul')
-        for currency in table.xpath("li/table/tr"):
-            name = currency.xpath("td[2]/text()[1]").extract()[0].replace(",", "")
-            symbol = symbols.get(name, name)
-            rate = currency.xpath("td[3]/span/text()[1]").extract()[0].replace(",", "")
+        span_id_prefix = "ContentPlaceHolder1_lbl"
+        elements = response.css(f".uk-comment-list span[id^={span_id_prefix}]")
+        date = response.request.url[-len("yyyy-mm-dd") :]
+        for element in elements:
+            symbol = element.css("::attr(id)").get()[len(span_id_prefix) :]
+            rate = element.css("::text").get().replace(",", "")
             yield {
-                "date": response.request.url[-len("yyyy-mm-dd") :],
+                "date": date,
                 "symbol": symbol,
                 "rate": rate,
             }
