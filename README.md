@@ -17,9 +17,7 @@ Each version has its own directory and readme file with instructions.
 Comparisons will be updated as the project goes.
 ## Languages and tools:
 Not sure if some are even possible, but you never know until you try.
-- [ ] Python - Console
 - [x] Python - Console - Scrapy
-- [ ] Python - PyQt5 - Scrapy
 - [x] Python - Tkinter - Scrapy
 - [x] VBA - Excel
 - [ ] JavaScript/TypeScript - React
