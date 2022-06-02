@@ -10,3 +10,5 @@
 **/app.log
 **/index.xlsb
 **/~$index.xlsb
+**/xvba_modules
+**/xvba_unit_test
