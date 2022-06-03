@@ -20,7 +20,7 @@ Not sure if some are even possible, but you never know until you try.
 - [x] Python - Console - Scrapy
 - [x] Python - Tkinter - Scrapy
 - [x] VBA - Excel
-- [ ] JavaScript/TypeScript - React
+- [x] JavaScript - Node.js
 - [ ] Java/Kotlin - Console
 - [ ] UiPath - Chrome
 - [ ] Go - Console
