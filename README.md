@@ -21,7 +21,7 @@ Not sure if some are even possible, but you never know until you try.
 - [x] Python - Tkinter - Scrapy
 - [x] VBA - Excel
 - [x] JavaScript - Node.js
-- [ ] Java/Kotlin - Console
+- [x] Java - Console
 - [ ] UiPath - Chrome
 - [ ] Go - Console
 - [ ] PHP
