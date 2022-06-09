@@ -8,7 +8,7 @@ Some code are written unnecessarily complicated, or uses unessential external li
 
 # Ready to use version
 Download and run the executable file from:
-https://github.com/bilguun-zorigt/mongolbank-rate-downloader/releases
+https://github.com/bilguun-zorigt/mongolbank-rate-scraper-in-different-programming-languages/releases
 
 # Create the bundle yourself
 Each version has its own directory and readme file with instructions.
@@ -18,11 +18,11 @@ Comparisons will be updated as the project goes.
 ## Languages and tools:
 Not sure if some are even possible, but you never know until you try.
 - [x] Go
-- [x] VBA (Excel)
 - [x] Java
-- [x] Python
-- [x] Python (GUI)
 - [x] JavaScript (Node.js)
+- [x] Python (GUI)
+- [x] Python
+- [x] VBA (Excel)
 - [ ] UiPath - Chrome
 - [ ] PHP
 - [ ] C#

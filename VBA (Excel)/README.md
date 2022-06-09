@@ -5,4 +5,4 @@ Download official daily foreign currency exchange rates from Bank of Mongolia (B
 
 # Ready to use version
 Download and run the excel file from:
-https://github.com/bilguun-zorigt/mongolbank-rate-downloader/releases
+https://github.com/bilguun-zorigt/mongolbank-rate-scraper-in-different-programming-languages/releases
