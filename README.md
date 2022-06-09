@@ -17,13 +17,13 @@ Each version has its own directory and readme file with instructions.
 Comparisons will be updated as the project goes.
 ## Languages and tools:
 Not sure if some are even possible, but you never know until you try.
-- [x] Python - Console - Scrapy
-- [x] Python - Tkinter - Scrapy
-- [x] VBA - Excel
-- [x] JavaScript - Node.js
-- [x] Java - Console
+- [x] Go
+- [x] VBA (Excel)
+- [x] Java
+- [x] Python
+- [x] Python (GUI)
+- [x] JavaScript (Node.js)
 - [ ] UiPath - Chrome
-- [ ] Go - Console
 - [ ] PHP
 - [ ] C#
 - [ ] C++
