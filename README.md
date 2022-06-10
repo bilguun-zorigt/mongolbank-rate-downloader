@@ -23,12 +23,15 @@ Not sure if some are even possible, but you never know until you try.
 - [x] Python (GUI)
 - [x] Python
 - [x] VBA (Excel)
-- [ ] UiPath - Chrome
+- [ ] Swift
 - [ ] PHP
+- [ ] C
 - [ ] C#
 - [ ] C++
-- [ ] Swift
 - [ ] Assembly
+- [ ] UiPath
+- [ ] Power Automate
+
 
 ## Atributes to compare:
 - How much effort it took to write
