@@ -6,4 +6,4 @@
 3. Open folder [![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)](https://go.dev/dl/ "Download Go") in Visual Studio Code
 
 4. Press <kbd>F1</kbd>, type <kbd>Reopen in Container</kbd>
-5. in terminal type <kbd>go run ./src</kbd> and press <kbd>⏎ Enter</kbd>
+5. Type <kbd>go run ./src</kbd> in terminal and press <kbd>⏎ Enter</kbd>
