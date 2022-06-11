@@ -20,16 +20,16 @@ var symbols = make(map[string]bool)
 var datesSymbolsRates = make(datesSymbolsRatesType)
 var goRoutineWaitGroup = sync.WaitGroup{}
 
-func scrapeConcurrently(dates []time.Time) ([]string, datesSymbolsRatesType) {
+func scrapeConcurrently(dates []time.Time, progressCallback func()) ([]string, datesSymbolsRatesType) {
 	for _, date := range dates {
 		goRoutineWaitGroup.Add(1)
-		go request(date)
+		go request(date, progressCallback)
 	}
 	goRoutineWaitGroup.Wait()
 	return symbolsOrdered, datesSymbolsRates
 }
 
-func request(date time.Time) {
+func request(date time.Time, progressCallback func()) {
 	url_params := fmt.Sprintf("?vYear=%v&vMonth=%v&vDay=%v", date.Year(), int(date.Month()), date.Day())
 	url := "https://www.mongolbank.mn/dblistofficialdailyrate.aspx" + url_params
 
@@ -43,6 +43,7 @@ func request(date time.Time) {
 	}
 
 	parse(date, response)
+	progressCallback()
 	goRoutineWaitGroup.Done()
 }
 
