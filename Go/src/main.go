@@ -48,6 +48,7 @@ func updateProgressBar() {
 	doneLengthString := strings.Repeat("█", doneLength)
 	remainingLengthString := strings.Repeat("█", pbLength-doneLength)
 	percentString := doneDays / totalDays * 100
+	// https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 	fmt.Printf("\r\033[42;32m%v\033[41;31m%v\033[0m %v%% %v/%v", doneLengthString, remainingLengthString, percentString, doneDays, totalDays)
 }
 
