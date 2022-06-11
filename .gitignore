@@ -10,3 +10,5 @@
 **/app.log
 **/index.xlsb
 **/~$index.xlsb
+**/.gradle
+**/bin

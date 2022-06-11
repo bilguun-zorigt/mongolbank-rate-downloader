@@ -10,14 +10,22 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class App {
+public class Main {
     static Boolean headerWritten = false;
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         System.out.println("Enter date to download from (yyyy-mm-dd): ");
+        // String startDateInputString="";
+        // while(reader.hasNextLine()){
+        //     startDateInputString=reader.nextLine();
+        // }
         String startDateInputString = reader.nextLine();
         System.out.println("Enter date to download to (yyyy-mm-dd): ");
+        // String endDateInputString="";
+        // while(reader.hasNextLine()){
+        //     endDateInputString=reader.nextLine();
+        // }
         String endDateInputString = reader.nextLine();
         reader.close();
 

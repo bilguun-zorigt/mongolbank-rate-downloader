@@ -4,14 +4,13 @@
         "dockerfile": "Dockerfile"
     },
     // Set *default* container specific settings.json values on container create.
-    "settings": {
-        "java.home": "/docker-java-home"
-    },
+    "settings": {},
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
         "vscjava.vscode-java-pack",
         "vscjava.vscode-gradle",
-        "redhat.java"
+        "redhat.java",
+        "mechatroner.rainbow-csv"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
