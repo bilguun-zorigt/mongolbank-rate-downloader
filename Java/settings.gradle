@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'BoM'
-include('src')
+include('app')

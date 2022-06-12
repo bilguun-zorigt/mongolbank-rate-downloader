@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Main {
+public class App {
     static Boolean headerWritten = false;
 
     public static void main(String[] args) {
@@ -18,13 +18,13 @@ public class Main {
         System.out.println("Enter date to download from (yyyy-mm-dd): ");
         // String startDateInputString="";
         // while(reader.hasNextLine()){
-        //     startDateInputString=reader.nextLine();
+        // startDateInputString=reader.nextLine();
         // }
         String startDateInputString = reader.nextLine();
         System.out.println("Enter date to download to (yyyy-mm-dd): ");
         // String endDateInputString="";
         // while(reader.hasNextLine()){
-        //     endDateInputString=reader.nextLine();
+        // endDateInputString=reader.nextLine();
         // }
         String endDateInputString = reader.nextLine();
         reader.close();

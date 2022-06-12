@@ -12,16 +12,16 @@ plugins {
 }
 
 // https://stackoverflow.com/questions/2551463/can-gradle-handle-a-build-directory-structure-that-does-not-conform-default-conv
-sourceSets {
-    main { 
-        java { srcDirs = ["src"] }// "src/main/java"
-        resources { srcDir "src" }// "src/main/resources"
-    }
-}
+// sourceSets {
+//     main { 
+//         java { srcDirs = ["src"] }// "src/main/java"
+//         resources { srcDir "src" }// "src/main/resources"
+//     }
+// }
 
 jar{
     manifest{
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': 'App'
     }
 
     // https://discuss.gradle.org/t/how-to-include-dependencies-in-jar/19571/18
@@ -46,7 +46,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'Main'
+    mainClass = 'App'
 }
 
 // run {

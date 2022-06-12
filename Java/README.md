@@ -7,6 +7,6 @@
 
 4. Press <kbd>F1</kbd> and type <kbd>Reopen in Container</kbd> and press <kbd>⏎ Enter</kbd>
 5. Type <kbd>gradle build</kbd> in terminal and press <kbd>⏎ Enter</kbd>
-6. Type <kbd>java -jar ./build/libs/BoM.jar</kbd> in terminal and press <kbd>⏎ Enter</kbd>
+6. Type <kbd>java -jar ./app/build/libs/app.jar</kbd> in terminal and press <kbd>⏎ Enter</kbd>
 
 <!-- https://github.com/Ileriayo/markdown-badges -->
