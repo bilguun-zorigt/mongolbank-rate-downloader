@@ -1,9 +1,12 @@
 {
-  "type": "module",
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.11",
-    "fs": "^0.0.1-security",
-    "node-fetch": "^3.2.5",
-    "prompt-sync": "^4.2.0"
-  }
+    "type": "module",
+    "scripts": {
+        "start": "node src/main.js"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.11",
+        "fs": "^0.0.1-security",
+        "node-fetch": "^3.2.5",
+        "prompt-sync": "^4.2.0"
+    }
 }
