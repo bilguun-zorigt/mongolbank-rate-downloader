@@ -21,7 +21,7 @@ plugins {
 
 jar{
     manifest{
-        attributes 'Main-Class': 'App'
+        attributes 'Main-Class': 'Main'
     }
 
     // https://discuss.gradle.org/t/how-to-include-dependencies-in-jar/19571/18
@@ -46,7 +46,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'App'
+    mainClass = 'Main'
 }
 
 // run {

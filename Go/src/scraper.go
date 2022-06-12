@@ -30,8 +30,8 @@ func scrapeConcurrently(dates []time.Time, progressCallback func()) ([]string, d
 }
 
 func request(date time.Time, progressCallback func()) {
-	url_params := fmt.Sprintf("?vYear=%v&vMonth=%v&vDay=%v", date.Year(), int(date.Month()), date.Day())
-	url := "https://www.mongolbank.mn/dblistofficialdailyrate.aspx" + url_params
+	urlParams := fmt.Sprintf("?vYear=%v&vMonth=%v&vDay=%v", date.Year(), int(date.Month()), date.Day())
+	url := "https://www.mongolbank.mn/dblistofficialdailyrate.aspx" + urlParams
 
 	response, err := http.Get(url)
 	if err != nil {
@@ -41,34 +41,35 @@ func request(date time.Time, progressCallback func()) {
 	if response.StatusCode != 200 {
 		log.Fatalf("status code error: %d %s", response.StatusCode, response.Status)
 	}
-
-	parse(date, response)
-	progressCallback()
-	goRoutineWaitGroup.Done()
-}
-
-func parse(date time.Time, response *http.Response) {
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	span_id_prefix := "ContentPlaceHolder1_lbl"
+	parse(date, doc)
+	progressCallback()
+	goRoutineWaitGroup.Done()
+}
 
-	elements := doc.Find(fmt.Sprintf(".uk-comment-list span[id^=%v]", span_id_prefix))
+func parse(date time.Time, doc *goquery.Document) {
+	spanIDPrefix := "ContentPlaceHolder1_lbl"
+
+	elements := doc.Find(fmt.Sprintf(".uk-comment-list span[id^=%v]", spanIDPrefix))
 
 	var symbolRates = make(symbolRatesType)
 
 	elements.Each(func(_ int, element *goquery.Selection) {
 		spanId, _ := element.Attr("id")
-		symbol := strings.ReplaceAll(spanId, span_id_prefix, "")
+		symbol := strings.ReplaceAll(spanId, spanIDPrefix, "")
 		if value := symbols[symbol]; !value {
 			symbols[symbol] = true
 			symbolsOrdered = append(symbolsOrdered, symbol)
 		}
-		rate, err := strconv.ParseFloat(strings.ReplaceAll(element.Text(), ",", ""), 64)
-		if err == nil {
-			symbolRates[symbol] = rate
+		if element.Text() != "" {
+			rate, err := strconv.ParseFloat(strings.ReplaceAll(element.Text(), ",", ""), 64)
+			if err == nil {
+				symbolRates[symbol] = rate
+			}
 		}
 	})
 	datesSymbolsRates[date] = symbolRates
