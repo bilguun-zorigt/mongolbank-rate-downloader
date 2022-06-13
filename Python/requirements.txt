@@ -1,6 +1,6 @@
 # Production
 beautifulsoup4==4.11.1
 # Development
-pyinstaller
+# pyinstaller
 black
 pylint
