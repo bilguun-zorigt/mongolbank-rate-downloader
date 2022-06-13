@@ -12,8 +12,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type symbolRatesType = map[string]float64
-type datesSymbolsRatesType = map[time.Time]symbolRatesType
+type symbolsRatesType = map[string]float64
+type datesSymbolsRatesType = map[time.Time]symbolsRatesType
 
 var symbolsOrdered []string
 var symbols = make(map[string]bool)
@@ -56,7 +56,7 @@ func parse(date time.Time, doc *goquery.Document) {
 
 	elements := doc.Find(fmt.Sprintf(".uk-comment-list span[id^=%v]", spanIDPrefix))
 
-	var symbolRates = make(symbolRatesType)
+	var symbolsRates = make(symbolsRatesType)
 
 	elements.Each(func(_ int, element *goquery.Selection) {
 		spanId, _ := element.Attr("id")
@@ -68,9 +68,9 @@ func parse(date time.Time, doc *goquery.Document) {
 		if element.Text() != "" {
 			rate, err := strconv.ParseFloat(strings.ReplaceAll(element.Text(), ",", ""), 64)
 			if err == nil {
-				symbolRates[symbol] = rate
+				symbolsRates[symbol] = rate
 			}
 		}
 	})
-	datesSymbolsRates[date] = symbolRates
+	datesSymbolsRates[date] = symbolsRates
 }

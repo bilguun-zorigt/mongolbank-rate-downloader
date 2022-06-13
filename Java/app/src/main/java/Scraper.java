@@ -42,17 +42,17 @@ class ScrapeConcurrently {
 
         Elements elements = doc.select(".uk-comment-list span[id^=%s]".formatted(spanIDPrefix));
 
-        HashMap<String, Float> symbolRates = new HashMap<>();
+        HashMap<String, Float> symbolsRates = new HashMap<>();
 
         for (Element element : elements) {
             String symbol = element.id().substring(spanIDPrefix.length());
             addIfNotExist(symbol);
             if (element.text() != "") {
                 Float rate = Float.parseFloat(element.text().replace(",", ""));
-                symbolRates.put(symbol, rate);
+                symbolsRates.put(symbol, rate);
             }
         }
-        datesSymbolsRates.put(date, symbolRates);
+        datesSymbolsRates.put(date, symbolsRates);
     }
 
     synchronized void addIfNotExist(String symbol) {

@@ -38,6 +38,7 @@ public class Main {
         long csvWriteDuration = (System.nanoTime() - csvWriteStartTime);
 
         successMessage();
+        
         System.out.print("\nReports:\n");
         printDuration("Scraping:    ", scrapingDuration);
         printDuration("Convertion:  ", convertionDuration);
