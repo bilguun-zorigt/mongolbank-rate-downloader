@@ -1,6 +1,5 @@
 # Production
-scrapy==2.6.
-
+beautifulsoup4==4.11.1
 # Development
 pyinstaller
 black
