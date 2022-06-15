@@ -59,8 +59,8 @@ function getDateInput(message) {
 }
 
 function getDates() {
-    startDate = getDateInput("Enter date to download from (yyyy-mm-dd): ")
-    endDate = getDateInput("Enter date to download to (yyyy-mm-dd): ")
+    startDate = getDateInput("Enter start date (yyyy-mm-dd): ")
+    endDate = getDateInput("Enter end date (yyyy-mm-dd): ")
 
     let dates = []
     for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {

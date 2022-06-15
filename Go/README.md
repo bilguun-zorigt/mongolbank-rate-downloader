@@ -5,5 +5,6 @@
 3. Open folder [![Go](https://img.shields.io/badge/go-%2300ADD8.svg?logo=go&logoColor=white)](https://go.dev/dl/ "Download Go") in Visual Studio Code
 4. Press <kbd>F1</kbd> and type <kbd>Reopen in Container</kbd> and press <kbd>⏎ Enter</kbd>
 5. Type <kbd>go run ./src</kbd> in terminal and press <kbd>⏎ Enter</kbd>
+6. To build an executable file, type <kbd>go build ./src/*</kbd> in terminal and press <kbd>⏎ Enter</kbd>
 
 <!-- https://github.com/Ileriayo/markdown-badges -->

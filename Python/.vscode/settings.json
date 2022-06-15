@@ -1,0 +1,9 @@
+{
+    "editor.tabSize": 4,
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,line-too-long"
+    ]
+}

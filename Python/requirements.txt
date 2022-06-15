@@ -1,6 +1,9 @@
 # Production
 beautifulsoup4==4.11.1
+aiohttp==3.8.1
+# scrapy==2.6.1
+
 # Development
-# pyinstaller
 black
 pylint
+# pyinstaller
