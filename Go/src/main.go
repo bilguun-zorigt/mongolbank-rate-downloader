@@ -51,14 +51,14 @@ func main() {
 	printDuration("Convertion:  ", convertionDuration)
 	printDuration("CSV creation:", csvWriteDuration)
 
-    reader := bufio.NewReader(os.Stdin)
-    fmt.Print("Press Enter to exit...")
-    for {
-        lineBreak, _ := reader.ReadString('\n')
-        if lineBreak != "\n" {
-            break
-        }
-    }
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Press Enter to exit...")
+	for {
+		lineBreak, _ := reader.ReadString('\n')
+		if lineBreak != "\n" {
+			break
+		}
+	}
 }
 
 func welcomeMessage() {
