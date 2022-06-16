@@ -1,19 +1,18 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 	"time"
-	// For Windows
+	// *** For Windows ***
+	// "bufio"
 	// "golang.org/x/sys/windows"
 )
 
-// For Windows
+// *** For Windows ***
 // func init() {
 // 	stdout := windows.Handle(os.Stdout.Fd())
 // 	var originalMode uint32
@@ -53,18 +52,15 @@ func main() {
 	printDuration("Convertion:  ", convertionDuration)
 	printDuration("CSV creation:", csvWriteDuration)
 
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Press Enter to exit...")
-	for {
-		lineBreak, _ := reader.ReadString('\n')
-		// For Windows
-		// if lineBreak != "\n" {
-		// 	break
-		// }
-		if lineBreak != "\n" {
-			break
-		}
-	}
+	// *** For Windows ***
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Print("Press Enter to exit...")
+	// for {
+	// 	lineBreak, _ := reader.ReadString('\n')
+	// 	if lineBreak != "\n" {
+	// 		break
+	// 	}
+	// }
 }
 
 func welcomeMessage() {
