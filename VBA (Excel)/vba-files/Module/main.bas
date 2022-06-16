@@ -2,8 +2,8 @@ Attribute VB_Name = "main"
 Option Explicit
 
 Sub main()
-    Dim date_from As Date: date_from = get_date_input("Enter start date (yyyy-mm-dd): ")
-    Dim date_to As Date: date_to = get_date_input("Enter end date (yyyy-mm-dd): ")
+    Dim date_from As Date: date_from = get_date_input("Source code at: https://github.com/bilguun-zorigt" & vbNewLine & "Enter start date (yyyy-mm-dd): ")
+    Dim date_to As Date: date_to = get_date_input("Source code at: https://github.com/bilguun-zorigt" & vbNewLine & vbNewLine & "Enter end date (yyyy-mm-dd): ")
 
     Dim AsyncRequest As clsAsyncRequest
     Dim DateSN As Date
