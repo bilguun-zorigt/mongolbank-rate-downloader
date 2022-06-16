@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -49,6 +50,15 @@ func main() {
 	printDuration("Scraping:    ", scrapingDuration)
 	printDuration("Convertion:  ", convertionDuration)
 	printDuration("CSV creation:", csvWriteDuration)
+
+    reader := bufio.NewReader(os.Stdin)
+    fmt.Print("Press Enter to exit...")
+    for {
+        lineBreak, _ := reader.ReadString('\n')
+        if lineBreak != "\n" {
+            break
+        }
+    }
 }
 
 func welcomeMessage() {
