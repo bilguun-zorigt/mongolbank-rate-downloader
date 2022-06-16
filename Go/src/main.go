@@ -5,20 +5,22 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-	"os"
-	"golang.org/x/sys/windows"
+	// For Windows
+	// "golang.org/x/sys/windows"
 )
 
-func init() {
-    stdout := windows.Handle(os.Stdout.Fd())
-    var originalMode uint32
+// For Windows
+// func init() {
+// 	stdout := windows.Handle(os.Stdout.Fd())
+// 	var originalMode uint32
 
-    windows.GetConsoleMode(stdout, &originalMode)
-    windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-}
+// 	windows.GetConsoleMode(stdout, &originalMode)
+// 	windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+// }
 
 var startDate time.Time
 var endDate time.Time
@@ -55,6 +57,10 @@ func main() {
 	fmt.Print("Press Enter to exit...")
 	for {
 		lineBreak, _ := reader.ReadString('\n')
+		// For Windows
+		// if lineBreak != "\n" {
+		// 	break
+		// }
 		if lineBreak != "\n" {
 			break
 		}
