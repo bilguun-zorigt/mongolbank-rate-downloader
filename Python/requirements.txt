@@ -4,6 +4,6 @@ aiohttp==3.8.1
 # scrapy==2.6.1
 
 # Development
-black
-pylint
+# black
+# pylint
 # pyinstaller

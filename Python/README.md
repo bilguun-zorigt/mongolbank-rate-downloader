@@ -24,7 +24,7 @@
     venv\Scripts\activate
     ```
 5. Type <kbd>pip install -r requirements.txt</kbd> in terminal and press <kbd>⏎ Enter</kbd>
-6. Type <kbd>./venv/bin/python src/main.js</kbd> in terminal and press <kbd>⏎ Enter</kbd>
+6. Type <kbd>python src/main.js</kbd> in terminal and press <kbd>⏎ Enter</kbd>
 7. To create an executable
     ```
     pip install pyinstaller
