@@ -7,20 +7,20 @@ If you want to modify the code and bundle it yourself, follow the instructions i
 
 # About the Project
 Purpose of this project is to compare what simple task of scraping web page looks like in different programming languages and different tools: (Not sure if some are even possible, but you never know until you try)
+### Programming Languages
+- [ ] C#
+- [ ] C++
 - [x] Go
 - [x] Java
 - [x] JavaScript (Node.js)
-- [x] Python (GUI)
-- [x] Python
-- [x] VBA (Excel)
-- [ ] Swift
 - [ ] PHP
-- [ ] C
-- [ ] C#
-- [ ] C++
-- [ ] Assembly
-- [ ] UiPath
-- [ ] Power Automate
+- [x] Python
+- [ ] Ruby
+- [ ] Swift
+- [x] VBA (Excel)
+- [ ] Ξ RPA: Power Automate
+- [ ] Ξ RPA: UiPath
+- [x] Ω Archived: Python (GUI, Scrapy)
 
 # Comparisons
 Comparisons will be added at the final stage of the project.
