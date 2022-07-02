@@ -10,7 +10,7 @@ Purpose of this project is to compare what simple task of scraping web page look
 ### Programming Languages
 - [ ] Bash
 - [ ] C#
-- [ ] C++
+- [x] C++
 - [x] Go
 - [x] Java
 - [x] JavaScript (Node.js)
