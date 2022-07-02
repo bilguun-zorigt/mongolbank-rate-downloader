@@ -17,15 +17,20 @@ typedef struct tm Date;
 //     return ttm;
 // }
 
-std::string getISODateString(Date date)
+std::string getISODateString(Date date, std::string separator)
 {
     std::string year = std::to_string(date.tm_year + 1900);
     std::string month = std::to_string(date.tm_mon + 1);
     std::string day = std::to_string(date.tm_mday);
 
-    return year + "-" +
-           std::string(2 - month.size(), '0').append(month) + "-" +
+    return year + separator +
+           std::string(2 - month.size(), '0').append(month) + separator +
            std::string(2 - day.size(), '0').append(day);
+}
+
+std::string getISODateString(Date date)
+{
+    return getISODateString(date, "-");
 }
 
 // bool operator<(const Date &d1, const Date &d2)
@@ -49,7 +54,7 @@ private:
 
 public:
     std::vector<std::string> symbolsOrdered;
-    std::map<std::string, std::map<std::string, float>> datesSymbolsRates;
+    std::map<std::string, std::map<std::string, double>> datesSymbolsRates;
     scrapeConcurrently(std::vector<Date> dates, std::function<void()> progressCallback);
 };
 
@@ -86,7 +91,7 @@ void scrapeConcurrently::parse(Date date, std::string doc)
     std::regex_iterator<std::string::iterator> elementsIter(doc.begin(), doc.end(), elements);
     std::regex_iterator<std::string::iterator> endOfString;
 
-    std::map<std::string, float> symbolsRates;
+    std::map<std::string, double> symbolsRates;
 
     while (elementsIter != endOfString)
     {
@@ -103,7 +108,7 @@ void scrapeConcurrently::parse(Date date, std::string doc)
             std::string rateString = element[2];
             rateString.erase(std::remove(rateString.begin(), rateString.end(), ','), rateString.end());
             if (rateString != "")
-                symbolsRates[symbol] = std::stof(rateString);
+                symbolsRates[symbol] = std::stod(rateString);
         }
         elementsIter++;
     }

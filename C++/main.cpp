@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iomanip>
 #include <math.h>
+#include <chrono>
 #include "scraper.hpp"
 
 Date startDate;
@@ -13,10 +14,10 @@ void welcomeMessage();
 Date getDateInput(std::string message);
 std::vector<Date> getDates();
 void updateProgressBar();
-void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrdered, std::vector<Date> *datesOrdered, std::map<std::string, std::map<std::string, float>> *datesSymbolsRates);
+void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrdered, std::vector<Date> *datesOrdered, std::map<std::string, std::map<std::string, double>> *datesSymbolsRates);
 void writeCSVFile(std::string csvString);
 void successMessage();
-void printDuration(std::string operationName, int durationTime);
+void printDuration(std::string operationName, auto durationTime);
 
 int main()
 {
@@ -25,28 +26,27 @@ int main()
     auto datesOrdered = getDates();
     totalDays = datesOrdered.size();
 
-    // scrapingStartTime = time.Now();
+    auto scrapingStartTime = std::chrono::steady_clock::now();
     auto scraped = scrapeConcurrently(datesOrdered, updateProgressBar);
-    // scrapingDuration = time.Since(scrapingStartTime);
+    auto scrapingDuration = std::chrono::steady_clock::now() - scrapingStartTime;
 
-    // convertionStartTime = time.Now();
+    auto convertionStartTime = std::chrono::steady_clock::now();
     std::string csvString;
     getCSVString(&csvString, &scraped.symbolsOrdered, &datesOrdered, &scraped.datesSymbolsRates);
-    std::cout << "csvString: " << csvString << std::endl;
-    // convertionDuration = time.Since(convertionStartTime);
+    auto convertionDuration = std::chrono::steady_clock::now() - convertionStartTime;
 
-    // csvWriteStartTime = time.Now();
-    // writeCSVFile(csvString);
-    // csvWriteDuration = time.Since(csvWriteStart; Time);
+    auto csvWriteStartTime = std::chrono::steady_clock::now();
+    writeCSVFile(csvString);
+    auto csvWriteDuration = std::chrono::steady_clock::now() - csvWriteStartTime;
 
-    // successMessage();
+    successMessage();
 
-    // fmt.Print("\nReports:\n");
-    // printDuration("Scraping:    ", scrapingDuration);
-    // printDuration("Convertion:  ", convertionDuration);
-    // printDuration("CSV creation:", csvWriteDuration);
+    std::cout << "\nReports:\n";
+    printDuration("Scraping:    ", scrapingDuration);
+    printDuration("Convertion:  ", convertionDuration);
+    printDuration("CSV creation:", csvWriteDuration);
 
-    // return 0;
+    return 0;
 }
 
 void welcomeMessage()
@@ -78,8 +78,8 @@ Date getDateInput(std::string message)
 std::vector<Date> getDates()
 {
     std::vector<Date> dates;
-    Date startDate = getDateInput("Enter start date (yyyy-mm-dd): ");
-    Date endDate = getDateInput("Enter end date (yyyy-mm-dd): ");
+    startDate = getDateInput("Enter start date (yyyy-mm-dd): ");
+    endDate = getDateInput("Enter end date (yyyy-mm-dd): ");
     for (Date date = startDate; mktime(&date) <= mktime(&endDate); ++date.tm_mday)
         dates.push_back(date);
     return dates;
@@ -102,7 +102,7 @@ void updateProgressBar()
               << "%\033[0m";
 }
 
-void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrdered, std::vector<Date> *datesOrdered, std::map<std::string, std::map<std::string, float>> *datesSymbolsRates)
+void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrdered, std::vector<Date> *datesOrdered, std::map<std::string, std::map<std::string, double>> *datesSymbolsRates)
 {
     *csvString = "Date";
     for (std::string symbol : *symbolsOrdered)
@@ -117,10 +117,13 @@ void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrder
         for (std::string symbol : *symbolsOrdered)
         {
             std::string rateString;
-
             auto search = dateSymbolRates->find(symbol);
             if (search != dateSymbolRates->end())
+            {
                 rateString = std::to_string(search->second);
+                rateString.erase(rateString.find_last_not_of('0') + 1, std::string::npos);
+                rateString.erase(rateString.find_last_not_of('.') + 1, std::string::npos);
+            }
             else
                 rateString = "";
 
@@ -129,26 +132,26 @@ void getCSVString(std::string *csvString, std::vector<std::string> *symbolsOrder
     }
 }
 
-// void writeCSVFile(std::string csvString)
-// {
-//     // fileName = fmt.Sprintf("BoM Rates %v-%v.csv", startDate.Format("20060102"), endDate.Format("20060102"))
-//     // err := ioutil.WriteFile(fileName, []byte(csvString), 0644)
-//     // if err != nil {
-//     // 	log.Fatal(err)
-//     // }
-//     std::ofstream outFile;
-//     outFile.open("output.txt");
-//     outFile << str << std::endl;
-//     outFile.close();
-//     std::cout << "File saved" << std::endl;
-// }
+void writeCSVFile(std::string csvString)
+{
+    fileName = "BoM Rates " + getISODateString(startDate, "") + "-" + getISODateString(endDate, "") + ".csv";
+    std::ofstream outFile;
+    outFile.open(fileName);
+    outFile << csvString << std::endl;
+    outFile.close();
+}
 
-// void successMessage()
-// {
-//     fmt.Printf("\nFile saved: '\033[34m%v\033[0m'\n", fileName)
-// }
+void successMessage()
+{
+    std::cout << "\nFile saved: '\033[34m" + fileName + "\033[0m'\n";
+}
 
-// void printDuration(std::string operationName, int durationTime)
-// {
-//     fmt.Printf("%v \033[34m%.2f\033[0m seconds or \033[34m%v\033[0m milliseconds or \033[34m%v\033[0m microseconds or \033[34m%v\033[0m nanoseconds\n", operationName, durationTime.Seconds(), durationTime.Milliseconds(), durationTime.Microseconds(), durationTime.Nanoseconds())
-// }
+void printDuration(std::string operationName, auto durationTime)
+{
+    std::cout
+        << operationName << " \033[34m"
+        << std::fixed << std::setprecision(2) << std::chrono::duration<double>(durationTime).count() << "\033[0m seconds or \033[34m"
+        << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(durationTime).count()) << "\033[0m milliseconds or \033[34m"
+        << std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(durationTime).count()) << "\033[0m microseconds or \033[34m"
+        << std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(durationTime).count()) << "\033[0m nanoseconds\n";
+}

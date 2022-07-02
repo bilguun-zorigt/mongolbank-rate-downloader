@@ -8,6 +8,7 @@ If you want to modify the code and bundle it yourself, follow the instructions i
 # About the Project
 Purpose of this project is to compare what simple task of scraping web page looks like in different programming languages and different tools: (Not sure if some are even possible, but you never know until you try)
 ### Programming Languages
+- [ ] Bash
 - [ ] C#
 - [ ] C++
 - [x] Go
@@ -16,6 +17,7 @@ Purpose of this project is to compare what simple task of scraping web page look
 - [ ] PHP
 - [x] Python
 - [ ] Ruby
+- [ ] Rust
 - [ ] Swift
 - [x] VBA (Excel)
 - [ ] Ξ RPA: Power Automate
