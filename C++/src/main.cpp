@@ -63,8 +63,8 @@ Date getDateInput(std::string message)
         std::cin >> dateString;
 
         Date date;
-        std::istringstream dateStringStream(dateString);
-        dateStringStream >> std::get_time(&date, "%Y-%m-%d");
+        std::istringstream dateStringStream(dateString + " 00:00:00");
+        dateStringStream >> std::get_time(&date, "%Y-%m-%d %H:%M:%S");
 
         if (getISODateString(date) != dateString)
         {
