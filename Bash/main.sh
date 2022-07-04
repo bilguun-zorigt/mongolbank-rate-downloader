@@ -1,5 +1,5 @@
 #!/bin/bash
-# ./scraper.sh
+source ./scraper.sh
 
 # var startDate time.Time
 # var endDate time.Time
@@ -11,10 +11,11 @@ function main {
 	welcomeMessage
 
 	datesOrdered=$(getDates)
-    echo $datesOrdered
-	# totalDays = len(datesOrdered)
+	totalDays=$(wc -w <<< "$datesOrdered")
 
 	# scrapingStartTime := time.Now()
+	scrapeConcurrently "$datesOrdered"
+    # echo $a
 	# symbolsOrdered, datesSymbolsRates := scrapeConcurrently(datesOrdered, updateProgressBar)
 	# scrapingDuration := time.Since(scrapingStartTime)
 
@@ -42,7 +43,7 @@ function getDateInput {
     local message="$1"
 	while true; do 
         read -p $'\033[0m'"$message"$'\033[34m' dateString
-		date=$(date -d $dateString +%Y-%m-%d)
+		date=$(date -d "$dateString" +%Y-%m-%d)
 		if [ "$dateString" != "$(date -d "$date" +%Y-%m-%d)" ]; then 
 			echo  $'\033[31mDate entered is not valid. Must be formatted as yyyy-mm-dd\033[0m' > $(tty)
 			continue
@@ -53,19 +54,16 @@ function getDateInput {
 }
 
 function getDates {
-	dates=()
+	dates=""
     startDate=$(getDateInput "Enter start date (yyyy-mm-dd): ")
 	endDate=$(getDateInput "Enter end date (yyyy-mm-dd): ")
+
     d=
     n=0
     until [ "$d" = "$endDate" ]; do  
         d=$(date -d "$startDate + $n days" +%Y-%m-%d)
-		dates+=($d)
-        echo "$d" > $(tty)
+		dates+=" $d"
         ((n++))
-    done
-    for a in $dates; do
-        echo $a > $(tty)
     done
 	echo $dates
 }

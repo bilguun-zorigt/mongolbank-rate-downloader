@@ -1,13 +1,21 @@
 #!/bin/bash
 
-main(){
-    for i in {1..10}; do ppp & done
+function scrapeConcurrently {
+    local datesOrdered="$1"
+    # local updateProgressBar="$2"
+    for date in $datesOrdered; do request "$date" & done
     wait
     echo "1"
 }
 
-function ppp {
-    html=$(curl "https://www.mongolbank.mn/dblistofficialdailyrate.aspx?vYear=2022&vMonth=2&vDay=7" | hxnormalize -x)
+function request {
+    local date="$1"
+
+    year=$(date -d "$date" +%Y)
+    month=$(date -d "$date" +%m)
+    day=$(date -d "$date" +%d)
+
+    html=$(curl "https://www.mongolbank.mn/dblistofficialdailyrate.aspx?vYear=$year&vMonth=$month&vDay=$day" | hxnormalize -x)
 
     elements=$(echo $html | hxselect -s '\n' ".uk-comment-list span[id^=ContentPlaceHolder1_lbl]")
 
@@ -25,7 +33,7 @@ function ppp {
     done
     echo $str  >> "BoM Rates $(date +%Y%m%d)-$(date +%Y%m%d).csv"
 
-    str=$(date +%Y-%m-%d)
+    str=$(date -d "$date" +%Y-%m-%d)
     for e in $elements; do
         # id=$(echo $e | hxselect -c '::attr(id)')
         # id=${id//ContentPlaceHolder1_lbl/}
