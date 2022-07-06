@@ -1,35 +1,28 @@
 #!/bin/bash
 source ./scraper.sh
 
-# var startDate time.Time
-# var endDate time.Time
-# var fileName string
-# var totalDays int
-# var doneDays int = 0
-
 function main {
 	welcomeMessage
-
-	datesOrdered=$(getDates)
+    
+    getDates
 	totalDays=$(wc -w <<< "$datesOrdered")
+    updateProgressBar
 
 	# scrapingStartTime := time.Now()
 	scrapeConcurrently "$datesOrdered"
-    # echo $a
-	# symbolsOrdered, datesSymbolsRates := scrapeConcurrently(datesOrdered, updateProgressBar)
 	# scrapingDuration := time.Since(scrapingStartTime)
 
 	# convertionStartTime := time.Now()
-	# csvString := getCSVString(symbolsOrdered, datesOrdered, datesSymbolsRates)
+	getCSVString
 	# convertionDuration := time.Since(convertionStartTime)
 
 	# csvWriteStartTime := time.Now()
-	# writeCSVFile(csvString)
+	writeCSVFile
 	# csvWriteDuration := time.Since(csvWriteStartTime)
 
-	# successMessage()
+	successMessage
 
-	# fmt.Print("\nReports:\n")
+	printf "\nReports:\n"
 	# printDuration("Scraping:    ", scrapingDuration)
 	# printDuration("Convertion:  ", convertionDuration)
 	# printDuration("CSV creation:", csvWriteDuration)
@@ -43,7 +36,7 @@ function getDateInput {
     local message="$1"
 	while true; do 
         read -p $'\033[0m'"$message"$'\033[34m' dateString
-		date=$(date -d "$dateString" +%Y-%m-%d)
+		local date=$(date -d "$dateString" +%Y-%m-%d)
 		if [ "$dateString" != "$(date -d "$date" +%Y-%m-%d)" ]; then 
 			echo  $'\033[31mDate entered is not valid. Must be formatted as yyyy-mm-dd\033[0m' > $(tty)
 			continue
@@ -54,33 +47,25 @@ function getDateInput {
 }
 
 function getDates {
-	dates=""
     startDate=$(getDateInput "Enter start date (yyyy-mm-dd): ")
 	endDate=$(getDateInput "Enter end date (yyyy-mm-dd): ")
 
-    d=
-    n=0
+    local d=
+    local n=0
     until [ "$d" = "$endDate" ]; do  
         d=$(date -d "$startDate + $n days" +%Y-%m-%d)
-		dates+=" $d"
+		datesOrdered+=" $d"
         ((n++))
     done
-	echo $dates
 }
 
-# func updateProgressBar() {
-# 	doneDays++
-# 	pbLength := 25
-# 	doneLength := int(float32(doneDays) * (float32(pbLength) / float32(totalDays)))
-# 	doneLengthString := strings.Repeat("█", doneLength)
-# 	remainingLengthString := strings.Repeat("█", pbLength-doneLength)
-# 	percentString := strconv.FormatFloat(float64(doneDays)/float64(totalDays)*100, 'f', 1, 64)
-# 	// https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-# 	fmt.Printf("\r\033[0mCurrent progress: \033[34m%v\033[41;31m%v\033[0m\033[34m %v/%v %v%%\033[0m", doneLengthString, remainingLengthString, doneDays, totalDays, percentString)
-# }
+function updateProgressBar {
+	# https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+	printf "\033[0mCurrent progress: "
+}
 
-# func getCSVString(symbolsOrdered []string, datesOrdered []time.Time, datesSymbolsRates datesSymbolsRatesType) string {
-# 	var csvString = "Date"
+function getCSVString {
+	csvString="Date"
 # 	for _, symbol := range symbolsOrdered {
 # 		csvString = csvString + "," + symbol
 # 	}
@@ -95,23 +80,37 @@ function getDates {
 # 			csvString = csvString + "," + rateString
 # 		}
 # 	}
-# 	return csvString
-# }
+declare -A datesSymbolsRates
 
-# func writeCSVFile(csvString string) {
-# 	fileName = fmt.Sprintf("BoM Rates %v-%v.csv", startDate.Format("20060102"), endDate.Format("20060102"))
-# 	err := ioutil.WriteFile(fileName, []byte(csvString), 0644)
-# 	if err != nil {
-# 		log.Fatal(err)
-# 	}
-# }
+    for date in $datesOrdered; do {
+        declare -A symbolsRates
+        while read -a line; do
+            local symbol=${line[0]}
+            local rate=${line[1]}
+            symbolsRates[$symbol]=$rate
+        done <".temp/$date.txt"
+        datesSymbolsRates[$date]=$symbolsRates
+    }; done
+    rm -rf .temp
 
-# func successMessage() {
-# 	fmt.Printf("\nFile saved: '\033[34m%v\033[0m'\n", fileName)
-# }
+    # for key in "${!datesSymbolsRates[@]}"; do echo $key; done
+    # for val in "${datesSymbolsRates[@]}"; do echo $val$'\n'; done
+}
 
-# func printDuration(operationName string, durationTime time.Duration) {
-# 	fmt.Printf("%v \033[34m%.2f\033[0m seconds or \033[34m%v\033[0m milliseconds or \033[34m%v\033[0m microseconds or \033[34m%v\033[0m nanoseconds\n", operationName, durationTime.Seconds(), durationTime.Milliseconds(), durationTime.Microseconds(), durationTime.Nanoseconds())
-# }
+function writeCSVFile {
+    fileName="BoM Rates $(date -d "$startDate" +%Y%m%d)-$(date -d "$endDate" +%Y%m%d).csv"
+	echo "$csvString" > "$fileName"
+}
+
+function successMessage {
+	printf "\nFile saved: '\033[34m%s\033[0m'\n" "$fileName"
+}
+
+function printDuration {
+    # local operationName="$1"
+    # local durationTime="$2"
+	# fmt.Printf("%v \033[34m%.2f\033[0m seconds or \033[34m%v\033[0m milliseconds or \033[34m%v\033[0m microseconds or \033[34m%v\033[0m nanoseconds\n", operationName, durationTime.Seconds(), durationTime.Milliseconds(), durationTime.Microseconds(), durationTime.Nanoseconds())
+    echo "1"
+}
 
 main
