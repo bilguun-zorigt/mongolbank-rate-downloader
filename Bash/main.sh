@@ -8,24 +8,25 @@ function main {
 	totalDays=$(wc -w <<< "$datesOrdered")
     updateProgressBar
 
-	# scrapingStartTime := time.Now()
+	local scrapingStartTime=$(date +%s%N)
 	scrapeConcurrently "$datesOrdered"
-	# scrapingDuration := time.Since(scrapingStartTime)
+	local scrapingDuration=$(( $(date +%s%N) - $scrapingStartTime ))
 
-	# convertionStartTime := time.Now()
+	local convertionStartTime=$(date +%s%N)
 	getCSVString
-	# convertionDuration := time.Since(convertionStartTime)
+	local convertionDuration=$(( $(date +%s%N) - $convertionStartTime ))
 
-	# csvWriteStartTime := time.Now()
+
+	local csvWriteStartTime=$(date +%s%N)
 	writeCSVFile
-	# csvWriteDuration := time.Since(csvWriteStartTime)
+	local csvWriteDuration=$(( $(date +%s%N) - $csvWriteStartTime ))
 
 	successMessage
 
 	printf "\nReports:\n"
-	# printDuration("Scraping:    ", scrapingDuration)
-	# printDuration("Convertion:  ", convertionDuration)
-	# printDuration("CSV creation:", csvWriteDuration)
+	printDuration "Scraping:    " $scrapingDuration
+	printDuration "Convertion:  " $convertionDuration
+	printDuration "CSV creation:" $csvWriteDuration
 }
 
 function welcomeMessage {
@@ -65,36 +66,31 @@ function updateProgressBar {
 }
 
 function getCSVString {
+    symbolsOrdered=()
+    while read -a line; do
+        symbolsOrdered+=(${line[0]})
+    done <".temp/$startDate.txt"
+    
 	csvString="Date"
-# 	for _, symbol := range symbolsOrdered {
-# 		csvString = csvString + "," + symbol
-# 	}
-# 	for _, date := range datesOrdered {
-# 		dateString := date.Format("2006-01-02")
-# 		csvString = csvString + "\n" + dateString
-# 		for _, symbol := range symbolsOrdered {
-# 			rateString := strconv.FormatFloat(datesSymbolsRates[date][symbol], 'f', -1, 64)
-# 			if rateString == "0" {
-# 				rateString = ""
-# 			}
-# 			csvString = csvString + "," + rateString
-# 		}
-# 	}
-declare -A datesSymbolsRates
+	for symbol in ${symbolsOrdered[@]}; do {
+		csvString+=",$symbol"
+	}; done
 
     for date in $datesOrdered; do {
+		csvString+=$'\n'"$date"
+
         declare -A symbolsRates
         while read -a line; do
             local symbol=${line[0]}
             local rate=${line[1]}
             symbolsRates[$symbol]=$rate
         done <".temp/$date.txt"
-        datesSymbolsRates[$date]=$symbolsRates
+
+        for symbol in ${symbolsOrdered[@]}; do {
+		    csvString+=",${symbolsRates[$symbol]}"
+        }; done
     }; done
     rm -rf .temp
-
-    # for key in "${!datesSymbolsRates[@]}"; do echo $key; done
-    # for val in "${datesSymbolsRates[@]}"; do echo $val$'\n'; done
 }
 
 function writeCSVFile {
@@ -107,10 +103,12 @@ function successMessage {
 }
 
 function printDuration {
-    # local operationName="$1"
-    # local durationTime="$2"
-	# fmt.Printf("%v \033[34m%.2f\033[0m seconds or \033[34m%v\033[0m milliseconds or \033[34m%v\033[0m microseconds or \033[34m%v\033[0m nanoseconds\n", operationName, durationTime.Seconds(), durationTime.Milliseconds(), durationTime.Microseconds(), durationTime.Nanoseconds())
-    echo "1"
+    local operationName="$1"
+    local nano="$2"
+    local micro="$(( $nano / 1000 ))"
+    local milli="$(( $micro / 1000 ))"
+    local seconds="$(( $milli / 1000 ))"
+	printf "%s \033[34m%s\033[0m seconds or \033[34m%s\033[0m milliseconds or \033[34m%s\033[0m microseconds or \033[34m%s\033[0m nanoseconds\n" "$operationName" $seconds $milli $micro $nano
 }
 
 main
