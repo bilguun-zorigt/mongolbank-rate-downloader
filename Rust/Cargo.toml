@@ -6,7 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# reqwest = "0.11.11"
-reqwest = { version = "0.11", features = ["blocking"] }
+reqwest = "0.11.11"
+# reqwest = { version = "0.11.11", features = ["blocking"] }
 tokio = { version = "1.20.1", features = ["full"] }
 scraper = "0.13.0"
+chrono = "0.4.19"
+futures = "0.3.21"
+linked-hash-map = "0.5.6"
