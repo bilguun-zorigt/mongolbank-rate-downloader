@@ -17,7 +17,7 @@ Purpose of this project is to compare what simple task of scraping web page look
 - [ ] PHP
 - [x] Python
 - [ ] Ruby
-- [ ] Rust
+- [x] Rust
 - [ ] Swift
 - [x] VBA (Excel)
 - [ ] Ξ RPA: Power Automate
