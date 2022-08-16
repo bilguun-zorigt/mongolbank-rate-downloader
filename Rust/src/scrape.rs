@@ -4,12 +4,12 @@ use linked_hash_map::LinkedHashMap;
 
 #[tokio::main]
 pub async fn scrape_concurrently(
-    dates: Vec<chrono::NaiveDate>,
+    dates: &Vec<chrono::NaiveDate>,
     progress_callback: &dyn Fn(),
 ) -> LinkedHashMap<chrono::NaiveDate, LinkedHashMap<String, f64>> {
     let mut requests = Vec::new();
     for date in dates {
-        requests.push(request(date, progress_callback))
+        requests.push(request(*date, progress_callback))
     }
 
     let results = join_all(requests).await;
@@ -46,7 +46,6 @@ async fn request(
 
     let doc = scraper::Html::parse_document(&response);
     let symbols_rates = parse(doc);
-    println!("{:?}", symbols_rates);
     progress_callback();
     (date, symbols_rates)
 }

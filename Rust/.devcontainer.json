@@ -29,7 +29,8 @@
         "mutantdino.resourcemonitor",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
-        "serayuzgur.crates"
+        "serayuzgur.crates",
+        "mechatroner.rainbow-csv"
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
