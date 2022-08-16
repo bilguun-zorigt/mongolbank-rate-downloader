@@ -5,6 +5,6 @@
 3. Open folder [![Rust](https://img.shields.io/badge/rust-%23000000.svg?logo=rust&logoColor=white)](https://go.dev/dl/ "Download Go") in Visual Studio Code
 4. Press <kbd>F1</kbd> and type <kbd>Reopen in Container</kbd> and press <kbd>⏎ Enter</kbd>
 5. Type <kbd>cargo run</kbd> in terminal and press <kbd>⏎ Enter</kbd>
-6. To build an executable file, type <kbd>cargo build</kbd> in terminal and press <kbd>⏎ Enter</kbd>
+6. To build an executable file, type <kbd>cargo build --release</kbd> in terminal and press <kbd>⏎ Enter</kbd>
 
 <!-- https://github.com/Ileriayo/markdown-badges -->
