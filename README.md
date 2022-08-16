@@ -11,6 +11,7 @@ Purpose of this project is to compare what simple task of scraping web page look
 - [x] Bash
 - [ ] C#
 - [x] C++
+- [ ] Carbon
 - [x] Go
 - [x] Java
 - [x] JavaScript (Node.js)
@@ -20,6 +21,7 @@ Purpose of this project is to compare what simple task of scraping web page look
 - [x] Rust
 - [ ] Swift
 - [x] VBA (Excel)
+- [ ] Zig
 - [ ] Ξ RPA: Power Automate
 - [ ] Ξ RPA: UiPath
 - [x] Ω Archived: Python (GUI, Scrapy)
